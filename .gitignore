@@ -1,0 +1,13 @@
+node_modules/
+dist/*
+!dist/index.js
+coverage/
+*.tmp
+.specify/memory/decisions/.lock/
+.superpowers/
+.specify/memory/relations/.lock/
+
+# Documentos, specs e artefatos do Spec Kit (fora do versionamento)
+docs/
+specs/
+.specify/

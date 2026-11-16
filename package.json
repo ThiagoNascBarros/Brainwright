@@ -1,0 +1,61 @@
+{
+  "name": "brainwright-mcp",
+  "version": "0.3.0",
+  "private": true,
+  "description": "The memory and validation layer for GitHub Spec Kit projects: an MCP server that reads specs/, tracks tasks.md progress, keeps decisions in .specify/memory and builds a knowledge graph (the second brain) with queries, reports and an Obsidian vault.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "mcp-server",
+    "ai-agents",
+    "spec-driven-development",
+    "claude-code",
+    "acceptance-criteria",
+    "adr",
+    "project-memory",
+    "spec-kit",
+    "github-spec-kit"
+  ],
+  "homepage": "https://github.com/ThiagoNascBarros/brainwright#readme",
+  "bugs": {
+    "url": "https://github.com/ThiagoNascBarros/brainwright/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThiagoNascBarros/brainwright.git"
+  },
+  "license": "MIT",
+  "author": "ThiagoNascBarros",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "bin": {
+    "brainwright-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "bundle": "node scripts/bundle.mjs",
+    "build": "tsc && npm run bundle",
+    "typecheck": "tsc --noEmit && tsc -p tests",
+    "pretest": "npm run build",
+    "test": "vitest run",
+    "test:load": "npm run build && vitest run --config vitest.load.config.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.3.1",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "^2.3.1",
+    "@types/node": "^22.20.5",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  }
+}

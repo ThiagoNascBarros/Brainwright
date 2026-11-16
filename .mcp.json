@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "brainwright": {
+      "command": "node",
+      "args": ["dist/index.js"],
+      "env": { "BRAINWRIGHT_ROOT": "." }
+    }
+  }
+}
