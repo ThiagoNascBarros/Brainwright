@@ -10,7 +10,7 @@ const readPkg = /JSON\.parse\(readFileSync\(new URL\('(?:\.\.\/)+package\.json',
 const inlineVersion = {
   name: 'inline-package-version',
   setup(b) {
-    b.onLoad({ filter: /[\\/]src[\\/](server|graph[\\/]repository)\.ts$/ }, (args) => {
+    b.onLoad({ filter: /[\\/]src[\\/]server\.ts$/ }, (args) => {
       const source = readFileSync(args.path, 'utf8');
       const contents = source.replace(readPkg, `{ version: ${JSON.stringify(pkg.version)} } as { version: string }`);
       if (contents === source) throw new Error(`bundle: package.json read not found in ${args.path}`);

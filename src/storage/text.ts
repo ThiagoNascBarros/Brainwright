@@ -40,7 +40,7 @@ export function snippet(text: string, terms: string[], max = 200): string {
 
 // A backticked token that looks like a file path: has a slash or a file extension, no spaces.
 const CODE_SPAN = /`([^`\s]+)`/g;
-// A bare path in prose, as Spec Kit tasks write them: "Create Album model in src/models/album.py".
+// A bare path in prose, as spec tasks write them: "Create Album model in src/models/album.py".
 const BARE_PATH = /(?:^|\s)((?:[\w@.-]+\/)+[\w@.-]+\.[a-zA-Z0-9]{1,8})(?=[\s,;:)]|\.(?:\s|$)|$)/g;
 /** Feature id and item id patterns (FR/SC/US/T), shared with graph mentions. */
 export const FEATURE_ID_SOURCE = String.raw`(?:\d{3,}|\d{8}-\d{6})-[\p{L}\p{N}][\p{L}\p{N}_-]*`;
