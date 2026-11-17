@@ -2,18 +2,11 @@ import { realpath, stat } from 'node:fs/promises';
 import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { BrainwrightError } from '../errors.js';
 
-/** The only top-level folders the server may touch (Spec Kit's layout). */
-export const ALLOWED_TOP_LEVEL = ['specs', '.specify'] as const;
-
-/** Returns `path` without trailing slashes. */
-export function stripTrailingSlashes(path: string): string {
-  let end = path.length;
-  while (end > 0 && path.charCodeAt(end - 1) === 47) end--;
-  return path.slice(0, end);
-}
+/** The only top-level folder the server may touch. */
+export const ALLOWED_TOP_LEVEL = ['specs-out-mcp'] as const;
 
 const outside = (rel: string) =>
-  new BrainwrightError('PATH_OUTSIDE_ROOT', `Path "${rel}" is outside specs/ and .specify/.`, 'Only Spec Kit folders can be read or written.');
+  new BrainwrightError('PATH_OUTSIDE_ROOT', `Path "${rel}" is outside specs-out-mcp/.`, 'Only specs-out-mcp/ can be read or written.');
 
 /** Returns the real path of the project root, or throws NOT_INITIALIZED when it is not a directory. */
 export async function ensureRoot(root: string): Promise<string> {
@@ -26,13 +19,13 @@ export async function ensureRoot(root: string): Promise<string> {
   throw new BrainwrightError(
     'NOT_INITIALIZED',
     'The project root does not exist.',
-    'Run `specify init` in the project, or set BRAINWRIGHT_ROOT to the project root.',
+    'Set BRAINWRIGHT_ROOT to an existing project root.',
   );
 }
 
 /**
  * Real path of `target`, resolving symlinks of its nearest existing ancestor when it does not exist
- * yet, so a later `mkdir -p` cannot follow an escaping symlink (e.g. `.specify` → outside).
+ * yet, so a later `mkdir -p` cannot follow an escaping symlink (e.g. `specs-out-mcp` → outside).
  */
 async function realpathOfNearest(target: string): Promise<string> {
   const missing: string[] = [];
@@ -66,13 +59,5 @@ export async function resolveWithin(root: string, rel: string, prefixes: readonl
   return real;
 }
 
-/** Resolves `rel` inside specs/ or .specify/ (FR-001). */
+/** Resolves `rel` inside specs-out-mcp/ (FR-001). */
 export const resolveInside = (root: string, rel: string): Promise<string> => resolveWithin(root, rel, ALLOWED_TOP_LEVEL);
-
-/** True for a plain relative folder: no absolute/drive/backslash/`..`/hidden/node_modules segments, and not under specs/. */
-export function isSafeRelativeDir(rel: string): boolean {
-  if (rel.includes('\\') || rel.startsWith('/') || /^[A-Za-z]:/.test(rel)) return false;
-  const segments = stripTrailingSlashes(rel).split('/');
-  if (segments.some((s) => s === '' || s.startsWith('.') || s === 'node_modules')) return false;
-  return segments[0] !== 'specs';
-}

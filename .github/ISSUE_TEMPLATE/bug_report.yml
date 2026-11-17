@@ -8,8 +8,8 @@ body:
       label: What happened
       description: The tool call you made and the response you got.
       placeholder: |
-        Called get_artifact { "feature": "001-photo-albums", "artifact": "spec", "section": "Requirements" }
-        Got: { "code": "SECTION_NOT_FOUND", ... }
+        Called <tool> { ... }
+        Got: { "code": "...", ... }
     validations:
       required: true
   - type: textarea
@@ -22,7 +22,7 @@ body:
     id: repro
     attributes:
       label: Minimal reproduction
-      description: The smallest `specs/` / `.specify/` content that shows the problem.
+      description: The smallest `specs-out-mcp/` content that shows the problem.
       render: markdown
   - type: input
     id: version
