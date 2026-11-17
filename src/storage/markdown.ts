@@ -30,7 +30,7 @@ export function normalizeKey(text: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-/** Removes HTML comments (Spec Kit templates are full of `<!-- ACTION REQUIRED -->` blocks). */
+/** Removes HTML comments (spec templates are full of `<!-- ACTION REQUIRED -->` blocks). */
 export function stripComments(text: string): string {
   return text.replace(/<!--[\s\S]*?-->/g, '');
 }
